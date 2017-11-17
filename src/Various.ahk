@@ -1,4 +1,21 @@
-﻿;My Autohotkey Script Collection
+﻿; Copyright 2014-2017 Hermann Krumrey <hermann@krumreyh.com>
+;
+; This file is part of ahk-scripts.
+;
+; ahk-scripts is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; (at your option) any later version.
+;
+; ahk-scripts is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with ahk-scripts.  If not, see <http://www.gnu.org/licenses/>.
+
+;My Autohotkey Script Collection
 
 ;Parameters
 #NoEnv
@@ -6,8 +23,17 @@ SendMode Input
 SetWorkingDir C:\
 SetFormat, float, 0.2
 
- 
+;General File System Initializer
+filesysteminitialize(){
+global
+mkvnixexe = C:\Program Files (x86)\MKV Toolnix\mmg.exe
+cmdxexe = C:\Windows\System32\cmd.exe
+}
+
+
 ;List of Global Variables
+
+;General:						;mkvnixexe								Stores MKV Toolnix Exectuable Location
 
 ;XDCC:							;workdir								Contains the working directory
 								;xdccfile								The XDCC .txt file
@@ -33,23 +59,23 @@ SetFormat, float, 0.2
 								;dltimes								Total Download Size of all packs in s
 								;ircserver%number%						Stores the IRC Server of a Series
 								
-;Folder Icon Changer:			;series																														;Stores the series name as a string
-								;seasons																													;Stores the amount of seasons of a show
-								;ova																														;Stores the availability of OVAs as a 1 or 0
-								;specials																													;Stores the availability of Specials as a 1 or 0
-								;movies																														;Stores the availability of Movies as a 1 or 0
-								;extras																														;Stores the availability of Extras as a 1 or 0
-								;parent																														;Stores the directory of the current directory
-								;mainfolder																													;Stores the directory of the main folder
-								;foldericonfolder																											;Stores the directory of the folder icon folder
-								;seasonfolder%number%																										;Stores the directory of the Season folder
-								;ovafolder																													;Stores the directory of the OVA folder
-								;specialfolder																												;Stores the directory of the Specials folder
-								;moviefolder																												;Stores the directory of the Movies folder
-								;extrafolder																												;Stores the directory of the Extras folder
-								;genericicons																												;Stores the directory of the generic icon folder
-								;child																														;Stores the directory of the child folder (or main folder)
-								;anime																														;Switches from anime mode(1) to normal mode (0)
+;Folder Icon Changer:			;series																														Stores the series name as a string
+								;seasons																													Stores the amount of seasons of a show
+								;ova																														Stores the availability of OVAs as a 1 or 0
+								;specials																													Stores the availability of Specials as a 1 or 0
+								;movies																														Stores the availability of Movies as a 1 or 0
+								;extras																														Stores the availability of Extras as a 1 or 0
+								;parent																														Stores the directory of the current directory
+								;mainfolder																													Stores the directory of the main folder
+								;foldericonfolder																											Stores the directory of the folder icon folder
+								;seasonfolder%number%																										Stores the directory of the Season folder
+								;ovafolder																													Stores the directory of the OVA folder
+								;specialfolder																												Stores the directory of the Specials folder
+								;moviefolder																												Stores the directory of the Movies folder
+								;extrafolder																												Stores the directory of the Extras folder
+								;genericicons																												Stores the directory of the generic icon folder
+								;child																														Stores the directory of the child folder (or main folder)
+								;anime																														Switches from anime mode(1) to normal mode (0)
 
 ;File Utilities:				;webcopy								
 	
@@ -153,32 +179,7 @@ channelchecker(packinfo,seriesno){
 
 	global													;Sets variables to global
 	
-	IfInString, packinfo, CR-EU|NEW							;Sets variable channel%number% with correct number and also ircserver%number%
-	{
-	channel%seriesno% = horriblesubs
-	ircserver%seriesno% = irc.rizon.net
-	}
-	IfInString, packinfo, CR-NL|NEW
-	{
-	channel%seriesno% = horriblesubs
-	ircserver%seriesno% = irc.rizon.net
-	}
-	IfInString, packinfo, CR-FR|NEW
-	{
-	channel%seriesno% = horriblesubs
-	ircserver%seriesno% = irc.rizon.net
-	}
-	IfInString, packinfo, CR-CA|NEW
-	{
-	channel%seriesno% = horriblesubs
-	ircserver%seriesno% = irc.rizon.net
-	}
-	IfInString, packinfo, CR-US|NEW
-	{
-	channel%seriesno% = horriblesubs
-	ircserver%seriesno% = irc.rizon.net
-	}
-	IfInString, packinfo, CR-ARCHIVE|1080p
+	IfInString, packinfo, CR-ARCHIVE|1080p					;Sets variable channel%number% with correct number and also ircserver%number%
 	{
 	channel%seriesno% = horriblesubs
 	ircserver%seriesno% = irc.rizon.net
@@ -193,7 +194,47 @@ channelchecker(packinfo,seriesno){
 	channel%seriesno% = horriblesubs
 	ircserver%seriesno% = irc.rizon.net
 	}
-	IfInString, packinfo, CR-ARUTHA|NL-720p
+	IfInString, packinfo, CR-ARUTHA|720p
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-CANADA|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-FRANCE2|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-FRANCE3|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-FRANCE|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-HOLLAND|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-NEWYORK|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-TEXAS2|NEW
+	{
+	channel%seriesno% = horriblesubs
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, CR-TEXAS|NEW
 	{
 	channel%seriesno% = horriblesubs
 	ircserver%seriesno% = irc.rizon.net
@@ -214,6 +255,11 @@ channelchecker(packinfo,seriesno){
 	ircserver%seriesno% = irc.rizon.net
 	}
 	IfInString, packinfo, Doki|Homura
+	{
+	channel%seriesno% = doki
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, Doki|Homura0
 	{
 	channel%seriesno% = doki
 	ircserver%seriesno% = irc.rizon.net
@@ -243,8 +289,32 @@ channelchecker(packinfo,seriesno){
 	channel%seriesno% = kametsu
 	ircserver%seriesno% = irc.kametsu.com
 	}
-	
-	
+	IfInString, packinfo, E-D|Mashiro
+	{
+	channel%seriesno% = exiled-destiny
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, XDCC-ZLAND-COMEDYTV-BOXSETS
+	{
+	channel%seriesno% = ztv
+	ircserver%seriesno% = irc.zestyland.com
+	}
+	IfInString, packinfo, Hiryuu
+	{
+	channel%seriesno% = intel
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, XDCC|Elsie
+	{
+	channel%seriesno% = intel
+	ircserver%seriesno% = irc.rizon.net
+	}
+	IfInString, packinfo, Fagster
+	{
+	channel%seriesno% = intel
+	ircserver%seriesno% = irc.rizon.net
+	}
+
 }
 }
 { ;.txt file parser
@@ -566,9 +636,26 @@ copyweb(){
 	webcopy = %clipboard%																										;Saves clipboard to local variable webcopy
 	StringReplace, webcopy,webcopy,", , All																						;";Removes all "
 	inputbox, episode, Episode Number, Enter Episode Number																		;Prompts for episode number and saves it to variable "episode"
+	inputbox, seasonvari, Season Number, Enter Season Number																	;Prompts for season number and saves it to variable "seasonvari"
+	inputbox, shownamevari, Show Name, Enter Show Name																			;Prompts for show name and saves it to variable "shownamevari"
 	KeyWait, numpad3, D																											;Pauses script until numpad3 is pressed down
-	send {f2}Episode %episode%-																									;Renames selected File
-	send {raw}%webcopy%
+	send {f2}																													;Opens Rename in explorer
+	if(seasonvari > 9){																											;Pastes new Episode Name
+		if(episode > 9){
+			send {raw}%shownamevari% - S%seasonvari%E%episode% - %webcopy%
+		}
+		else{
+			send {raw}%shownamevari% - S%seasonvari%E0%episode% - %webcopy%
+		}
+	}
+	else{
+		if(episode > 9){
+			send {raw}%shownamevari% - S0%seasonvari%E%episode% - %webcopy%
+		}
+		else{
+			send {raw}%shownamevari% - S0%seasonvari%E0%episode% - %webcopy%
+		}
+	}
 	sleep 200
 	send {tab}{enter}
 	inputbox, newseries, Same Series?, Press stop to stop the script`nor press enter to continue with the next episode,			;Prompts for continuation
@@ -584,8 +671,23 @@ copyweb(){
 			webcopy = %clipboard%																								;Saves clipboard to local variable webcopy
 			StringReplace, webcopy,webcopy,", , All																				;";Removes all "
 			KeyWait, numpad3, D																									;Pauses script until numpad3 is pressed down
-			send {f2}Episode %episode%-																							;Renames selected File
-			send {raw}%webcopy%
+			send {f2}																											;Opens Rename in Explorer
+			if(seasonvari > 9){																									;Pastes new Episode Name
+				if(episode > 9){
+					send {raw}%shownamevari% - S%seasonvari%E%episode% - %webcopy%
+				}
+				else{
+					send {raw}%shownamevari% - S%seasonvari%E0%episode% - %webcopy%
+				}
+			}
+			else{
+				if(episode > 9){
+					send {raw}%shownamevari% - S0%seasonvari%E%episode% - %webcopy%
+				}
+				else{
+					send {raw}%shownamevari% - S0%seasonvari%E0%episode% - %webcopy%
+				}
+			}
 			sleep 200
 			send {tab}{enter}																			
 			inputbox, newseries, Same Series?, Press stop to stop the script`nor press enter to continue with the next episode,	;Prompts for continuation
@@ -1233,22 +1335,20 @@ send {tab}{tab}{tab}{tab}Movies{tab}{tab}{tab}Subbed/Dubbed/Multi-Audio/Dual-Aud
 send {tab}{tab}{tab}{tab}Extras{tab}{tab}{tab}Subbed/Dubbed/Multi-Audio/Dual-Audio SD/SD+/720p/720p+/1080p/1080p+{enter}
 send {tab}{tab}{tab}{tab}Season x{tab}{tab}Subbed/Dubbed/Multi-Audio/Dual-Audio SD/SD+/720p/720p+/1080p/1080p+{enter}
 send {enter}{enter}{enter}
-send Keybinds:{Enter}{Enter}
-send Number Pad 0:{tab}Create Anime Folders and change icons to generic folder icons{enter}
-send Number Pad 1:{tab}Change existing anime folder structure icons{enter}
-send Number Pad 2:{tab}Convert old format anime folder icons to new format{enter}
-send Number Pad 9:{tab}Summary{enter}
 
 send Keybinds:{Enter}{Enter}
-send Number Pad 0:{tab}Main Script{enter}
-send Number Pad 1:{tab}XDCC File template creator{enter}
-send Number Pad 2:{tab}XDCC File opener{enter}
-send Number Pad 7:{tab}Log File creator{enter}
-send Number Pad 9:{tab}Summary{enter}
-send Number Pad 0:{tab}Create Anime Folders and change icons to generic folder icons{enter}
-send Number Pad 1:{tab}Change existing anime folder structure icons{enter}
-send Number Pad 2:{tab}Convert old format anime folder icons to new format{enter}
-send Number Pad 9:{tab}Summary{enter}
+send Home Button:{tab}Copies a filename and can be pasted with insert{enter}
+send Insert Button:{tab}Unbound, helps with Filename copy-paster{enter}
+send Number Pad 0:{tab}XDCC Downloader Script{enter}
+send Number Pad 1:{tab}Creates XDCCtemp.txt in %workdir%{enter}
+send Number Pad 2:{tab}Episode Renamer Script{enter}
+send Number Pad 3:{tab}Unbound, usaed for help in Episode Renamer Script{enter}
+send Number Pad 4:{tab}Folder Icon Changer (Existing Folder){enter}
+send Number Pad 5:{tab}Folder Crator and Changer{enter}
+send Number Pad 6:{tab}Folder Converter (Icon mechanic){enter}
+send Number Pad 7:{tab}Open XDCC.txt{enter}
+send Number Pad 8:{tab}Writes a log file from XDCC.txt{enter}
+send Number Pad 9:{tab}Summary
 return
 }
 { ;numpad2			Episode Renamer																								;Manual file renamer with prefix Episode x-
@@ -1316,3 +1416,34 @@ return
 }
 
 
+;Miscelaneous Program openers
+
+{ ;mkvnix
+::mkvnix::
+filesysteminitialize()
+run %mkvnixexe%
+return
+}
+{ ;javacomp
+::javacomp::
+filesysteminitialize()
+inputBox, javacompiler, Java Name, Name of .java file to be compiled
+run C:\Windows\System32\cmd.exe
+sleep 500
+send cd..{enter}
+sleep 150
+send cd..{enter}
+sleep 150
+send cd users{enter}
+sleep 150
+send cd Hermann{enter}
+sleep 150
+send cd desktop{enter}
+sleep 150
+send javac %javacompiler%.java{enter}
+loop{
+keywait, end, d,
+send javac %javacompiler%.java{enter}
+} 
+return
+}
