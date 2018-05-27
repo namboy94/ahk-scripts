@@ -1,4 +1,4 @@
-; Copyright 2014-2017 Hermann Krumrey <hermann@krumreyh.com>
+; Copyright 2014 Hermann Krumrey <hermann@krumreyh.com>
 ;
 ; This file is part of ahk-scripts.
 ;
